@@ -128,7 +128,7 @@ body {
   line-height: 1.6;
   max-width: 580px;
   color: #c4c4d0;
-  margin-bottom: 50px;
+  margin-bottom: 28px;
 }
 
 .hero__regions {
@@ -1022,7 +1022,7 @@ body {
   }
 
   .projects__header {
-    margin-bottom: 28px;
+    margin-bottom: 40px;
   }
 
   .projects__title {
