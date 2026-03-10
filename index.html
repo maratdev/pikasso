@@ -208,12 +208,96 @@
     </div>
   </section>
 
+  <section class="develop">
+    <div class="develop__inner">
+      <h2 class="develop__title">МЫ РАЗРАБАТЫВАЕМ</h2>
+      <p class="develop__subtitle">
+        Мы реализуем проекты любой сложности — от единичной стойки до презентабельной Welcome-зоны
+      </p>
+      <div class="develop__cards">
+        <article class="develop-card">
+          <button type="button" class="develop-card__trigger" data-order="Ресепшены и стойки">
+            <div class="develop-card__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=800&q=80"
+                alt="Ресепшены и стойки"
+                class="develop-card__img"
+                loading="lazy"
+              >
+              <div class="develop-card__overlay">
+                <span class="develop-card__cta">Заказать</span>
+              </div>
+            </div>
+          </button>
+          <h3 class="develop-card__label">Ресепшены и стойки</h3>
+        </article>
+        <article class="develop-card">
+          <button type="button" class="develop-card__trigger" data-order="Мебель на заказ">
+            <div class="develop-card__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=80"
+                alt="Мебель на заказ"
+                class="develop-card__img"
+                loading="lazy"
+              >
+              <div class="develop-card__overlay">
+                <span class="develop-card__cta">Заказать</span>
+              </div>
+            </div>
+          </button>
+          <h3 class="develop-card__label">Мебель на заказ</h3>
+        </article>
+        <article class="develop-card">
+          <button type="button" class="develop-card__trigger" data-order="Welcome-зоны">
+            <div class="develop-card__img-wrap">
+              <img
+                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
+                alt="Welcome-зоны"
+                class="develop-card__img"
+                loading="lazy"
+              >
+              <div class="develop-card__overlay">
+                <span class="develop-card__cta">Заказать</span>
+              </div>
+            </div>
+          </button>
+          <h3 class="develop-card__label">Welcome-зоны</h3>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <div class="lightbox" aria-hidden="true">
     <div class="lightbox__backdrop"></div>
     <figure class="lightbox__dialog" role="dialog" aria-modal="true">
       <button class="lightbox__close" type="button" aria-label="Закрыть проект"></button>
       <img src="" alt="" class="lightbox__img">
     </figure>
+  </div>
+
+  <div class="order-modal" id="order-modal" aria-hidden="true">
+    <div class="order-modal__backdrop"></div>
+    <div class="order-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="order-modal-title">
+      <button class="order-modal__close" type="button" aria-label="Закрыть"></button>
+      <h2 class="order-modal__title" id="order-modal-title">Заказать</h2>
+      <p class="order-modal__subtitle">Оставьте контакты — мы перезвоним и обсудим ваш проект</p>
+      <form class="order-modal__form" action="#" method="post">
+        <input type="hidden" name="product" id="order-product" value="">
+        <label class="order-modal__field">
+          <span class="order-modal__label">Имя</span>
+          <input type="text" name="name" class="order-modal__input" required placeholder="Как к вам обращаться">
+        </label>
+        <label class="order-modal__field">
+          <span class="order-modal__label">Телефон</span>
+          <input type="tel" name="phone" class="order-modal__input" required placeholder="+7 (___) ___-__-__">
+        </label>
+        <label class="order-modal__field">
+          <span class="order-modal__label">Комментарий</span>
+          <textarea name="comment" class="order-modal__input order-modal__input--area" rows="3" placeholder="Опишите задачу или пожелания"></textarea>
+        </label>
+        <button type="submit" class="order-modal__submit">Отправить заявку</button>
+      </form>
+    </div>
   </div>
 
   <script>
@@ -294,6 +378,48 @@
         if (event.key === "Escape") {
           close();
         }
+      });
+    })();
+
+    (function () {
+      const modal = document.getElementById("order-modal");
+      const backdrop = modal?.querySelector(".order-modal__backdrop");
+      const closeBtn = modal?.querySelector(".order-modal__close");
+      const productInput = document.getElementById("order-product");
+      const triggers = document.querySelectorAll(".develop-card__trigger");
+
+      if (!modal || !backdrop || !closeBtn || !productInput) return;
+
+      const titleEl = modal.querySelector(".order-modal__title");
+      const openOrder = (productName) => {
+        productInput.value = productName || "";
+        if (titleEl) titleEl.textContent = productName ? "Заказать: " + productName : "Заказать";
+        modal.setAttribute("aria-hidden", "false");
+        modal.classList.add("is-open");
+        document.body.style.overflow = "hidden";
+      };
+
+      const closeOrder = () => {
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+      };
+
+      triggers.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          openOrder(btn.getAttribute("data-order") || "");
+        });
+      });
+
+      closeBtn.addEventListener("click", closeOrder);
+      backdrop.addEventListener("click", closeOrder);
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("is-open")) closeOrder();
+      });
+
+      modal.querySelector(".order-modal__form")?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        closeOrder();
       });
     })();
   </script>
