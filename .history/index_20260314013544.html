@@ -56,12 +56,13 @@
       </div>
 
       <h1 class="hero__title">
-        Ресепшены и мебель для работы и<span>впечатлений</span>
+        Создаем пространства для работы и впечатлений:
+        <span>от ресепшенов до элитной мебели</span>
       </h1>
 
       <p class="hero__subtitle">
         Изготавливаем премиальные ресепшены и дизайнерскую мебель любой сложности.
-        Берём на себя весь цикл — от замера и концепции до монтажа на объекте.
+        Берем на себя весь цикл — от замера и концепции до монтажа на объекте.
       </p>
 
       <div class="hero__regions">
@@ -70,7 +71,7 @@
 
       <div class="hero__actions">
         <a href="#contact-form" class="hero__btn-primary js-open-order-modal">
-          Обсудить проект
+          Обсудим ваши желания! Напишите нам
         </a>
 
         <a href="#portfolio" class="hero__btn-secondary">
@@ -81,7 +82,7 @@
       <div class="hero__meta">
         <div class="hero__meta-item">
           <strong>Производство в России</strong>
-          Полный цикл: замер, концепция, производство и монтаж на объекте
+          Полный цикл: проектирование, производство, монтаж
         </div>
         <div class="hero__meta-item">
           <strong>Для коммерческих пространств</strong>
@@ -112,7 +113,7 @@
               loading="lazy"
             >
             <div class="project-card__overlay">
-              <h3 class="project-card__title">Ресепшен для бизнес-центра</h3>
+              <h3 class="project-card__title">Ресепшн для бизнес-центра</h3>
               <p class="project-card__meta">Махачкала · натуральный шпон, крашеный МДФ</p>
             </div>
           </button>
@@ -214,7 +215,7 @@
               loading="lazy"
             >
             <div class="project-card__overlay">
-              <h3 class="project-card__title">Ресепшен для медицинского центра</h3>
+              <h3 class="project-card__title">Ресепшн для медицинского центра</h3>
               <p class="project-card__meta">Дербент · износостойкие материалы и подсветка</p>
             </div>
           </button>
@@ -312,7 +313,7 @@
           и уникальной мебели по индивидуальным проектам.
         </p>
         <p class="about__text">
-          Сегодня наши основные проекты реализуются в городах Дагестана, в Москве и в Санкт-Петербурге.
+          Сегодня наши основные проекты реализуются в городах Дагестана, Москве и Санкт-Петербурге.
           Мы воплощаем в жизнь самые смелые фантазии наших клиентов, обеспечивая безупречное качество на всех этапах — от дизайна до монтажа.
         </p>
       </div>
@@ -356,10 +357,6 @@
     <figure class="lightbox__dialog" role="dialog" aria-modal="true">
       <button class="lightbox__close" type="button" aria-label="Закрыть проект"></button>
       <img src="" alt="" class="lightbox__img" loading="lazy">
-      <figcaption class="lightbox__caption">
-        <span class="lightbox__caption-title"></span>
-        <span class="lightbox__caption-meta"></span>
-      </figcaption>
     </figure>
   </div>
 
@@ -428,15 +425,11 @@
       const lightboxImg = lightbox?.querySelector(".lightbox__img");
       const closeBtn = lightbox?.querySelector(".lightbox__close");
       const backdrop = lightbox?.querySelector(".lightbox__backdrop");
-      const captionTitle = lightbox?.querySelector(".lightbox__caption-title");
-      const captionMeta = lightbox?.querySelector(".lightbox__caption-meta");
       if (!lightbox || !lightboxImg || !closeBtn || !backdrop) return;
 
-      const open = (src, alt, title, meta) => {
+      const open = (src, alt) => {
         lightboxImg.src = src;
         lightboxImg.alt = alt || "";
-        if (captionTitle) captionTitle.textContent = title || "";
-        if (captionMeta) captionMeta.textContent = meta || "";
         lightbox.setAttribute("aria-hidden", "false");
         lightbox.classList.add("is-open");
         document.body.style.overflow = "hidden";
@@ -446,8 +439,6 @@
         lightbox.classList.remove("is-open");
         lightbox.setAttribute("aria-hidden", "true");
         lightboxImg.src = "";
-        if (captionTitle) captionTitle.textContent = "";
-        if (captionMeta) captionMeta.textContent = "";
         document.body.style.overflow = "";
       };
 
@@ -461,11 +452,9 @@
         event.preventDefault();
         const src = button.getAttribute("data-project-full");
         const img = button.querySelector(".project-card__img");
-        const titleEl = button.querySelector(".project-card__title");
-        const metaEl = button.querySelector(".project-card__meta");
         if (!src || !(img instanceof HTMLImageElement)) return;
 
-        open(src, img.alt, titleEl?.textContent?.trim() || "", metaEl?.textContent?.trim() || "");
+        open(src, img.alt);
       });
 
       closeBtn.addEventListener("click", close);
