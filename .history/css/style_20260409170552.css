@@ -652,66 +652,6 @@ body {
   margin-top: 16px;
 }
 
-.about__text--lists {
-  margin-top: 16px;
-}
-
-.about__list-title {
-  margin: 0 0 12px;
-  color: #ffffff;
-  font-size: 14px;
-  letter-spacing: 0.04em;
-}
-
-.about__list-title strong {
-  font-weight: 600;
-}
-
-.about__list-title + .about__list {
-  margin-top: 0;
-}
-
-.about__list {
-  list-style: none;
-  margin: 0 0 28px;
-  padding: 0;
-}
-
-.about__list:last-of-type {
-  margin-bottom: 20px;
-}
-
-.about__list li {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  margin-bottom: 14px;
-  line-height: 1.65;
-}
-
-.about__list li:last-child {
-  margin-bottom: 0;
-}
-
-.about__list li::before {
-  content: "";
-  flex: 0 0 7px;
-  width: 7px;
-  height: 7px;
-  margin-top: 0.55em;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ffcf71, #ff884b);
-  box-shadow: 0 0 0 2px rgba(255, 184, 96, 0.18);
-}
-
-.about__list-footnote {
-  margin: 0;
-  padding-top: 4px;
-  font-size: 15px;
-  line-height: 1.9;
-  color: #c4c4d0;
-}
-
 .about__trust-title {
   font-size: 13px;
   letter-spacing: 0.18em;
@@ -1240,14 +1180,6 @@ body {
 
   .about__text {
     font-size: 14px;
-  }
-
-  .about__list-footnote {
-    font-size: 14px;
-  }
-
-  .about__list-title {
-    font-size: 13px;
   }
 
   .contacts {
