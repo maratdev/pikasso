@@ -57,14 +57,14 @@ body {
 
 .hero__logo {
   position: absolute;
-  top: 10vh;
+  top: 9vh;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
 }
 
 .hero__logo img {
-  height: 40px;
+  height: 75px;
   width: auto;
   display: block;
 }
@@ -84,21 +84,49 @@ body {
   margin-bottom: 20px;
 }
 
+@keyframes hero-dot-echo {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
 .hero__label-dot {
+  position: relative;
+  display: inline-block;
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: linear-gradient(135deg, #ffcf71, #ff884b);
-  box-shadow: 0 0 0 4px rgba(255, 184, 96, 0.25);
+  box-shadow: 0 0 0 2px rgba(255, 184, 96, 0.35);
+}
+
+.hero__label-dot::before,
+.hero__label-dot::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 184, 96, 0.5);
+  animation: hero-dot-echo 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+.hero__label-dot::after {
+  animation-delay: 1.3s;
 }
 
 .hero__title {
   font-family: "Yeseva One", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: clamp(40px, 6vw, 64px);
-  line-height: 1.05;
+  font-size: clamp(40px, 6vw, 74px);
+  line-height: 1.1;
   font-weight: 400;
   letter-spacing: -0.02em;
-  margin-bottom: 20px;
+  margin-bottom: 0.35em;
 }
 
 .hero__title span {
@@ -128,7 +156,7 @@ body {
   line-height: 1.6;
   max-width: 580px;
   color: #c4c4d0;
-  margin-bottom: 28px;
+  margin-bottom: 50px;
 }
 
 .hero__regions {
@@ -390,6 +418,10 @@ body {
   background-color: #020208;
 }
 
+.lightbox__caption {
+  display: none;
+}
+
 .lightbox__close {
   position: absolute;
   top: 12px;
@@ -577,10 +609,10 @@ body {
 .about__inner {
   max-width: 1160px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: 56px;
-  align-items: flex-start;
+}
+
+.about__content {
+  width: 100%;
 }
 
 .about__title {
@@ -613,58 +645,243 @@ body {
   font-size: 15px;
   line-height: 1.9;
   color: #c4c4d0;
-  max-width: 640px;
 }
 
 .about__text + .about__text {
   margin-top: 16px;
 }
 
-.about__trust-title {
-  font-size: 13px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #9a9ab2;
-  margin-bottom: 18px;
+.about__text--lists {
+  margin-top: 16px;
 }
 
-.about__trust-logos {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+.about__list-title {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-size: 14px;
+  letter-spacing: 0.04em;
 }
 
-.about__trust-item {
-  padding: 16px 18px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.04), transparent 55%),
-              rgba(8, 8, 20, 0.96);
+.about__list-title strong {
+  font-weight: 600;
+}
+
+.about__list-title + .about__list {
+  margin-top: 0;
+}
+
+.about__list {
+  list-style: none;
+  margin: 0 0 28px;
+  padding: 0;
+}
+
+.about__list:last-of-type {
+  margin-bottom: 20px;
+}
+
+.about__list li {
   display: flex;
-  align-items: center;
-  gap: 16px;
+  gap: 14px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  line-height: 1.65;
 }
 
-.about__trust-logo {
-  flex: 0 0 72px;
-  height: 56px;
-  border-radius: 12px;
-  background: #ffffff;
-  display: flex;
+.about__list li:last-child {
+  margin-bottom: 0;
+}
+
+.about__list li::before {
+  content: "";
+  flex: 0 0 7px;
+  width: 7px;
+  height: 7px;
+  margin-top: 0.55em;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffcf71, #ff884b);
+  box-shadow: 0 0 0 2px rgba(255, 184, 96, 0.18);
+}
+
+.about__list-footnote {
+  margin: 0;
+  padding-top: 4px;
+  font-size: 15px;
+  line-height: 1.9;
+  color: #c4c4d0;
+}
+
+
+/* -------- PARTNERS (TESTIMONIALS) -------- */
+
+.partners {
+  padding: 80px 20px 96px;
+  background-color: #030308;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.partners__inner {
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.partners__header {
+  max-width: 720px;
+  margin: 0 auto 52px;
+  text-align: center;
+}
+
+.partners__kicker {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  padding: 4px 12px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #cfcfd8;
 }
 
-.about__trust-logo img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+.partners__title {
+  font-family: "Yeseva One", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: clamp(28px, 3vw, 36px);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: #ffffff;
+  margin-bottom: 16px;
 }
 
-.about__trust-caption {
+.partners__subtitle {
+  margin: 0 auto;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #b9b9c8;
+}
+
+.partners__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
+}
+
+.partner-review {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 22px 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: radial-gradient(circle at top left, rgba(255, 207, 113, 0.06), transparent 52%),
+              rgba(8, 8, 20, 0.92);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.partner-review:hover {
+  border-color: rgba(255, 207, 113, 0.22);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+}
+
+.partner-review--wide {
+  grid-column: 1 / -1;
+}
+
+.partner-review--more:not(.is-revealed) {
+  display: none !important;
+}
+
+.partner-review__quote {
+  position: relative;
+  margin: 0;
+  padding: 0 0 0 20px;
+  border: none;
+}
+
+.partner-review__quote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.25em;
+  bottom: 0.25em;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #ffcf71, #ff884b);
+}
+
+.partner-review__quote p {
+  margin: 0 0 14px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #c4c4d0;
+}
+
+.partner-review__quote p:last-child {
+  margin-bottom: 0;
+}
+
+.partner-review__meta {
+  margin-top: auto;
+  padding-top: 20px;
+  margin-bottom: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.partner-review__name {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.partner-review__role {
+  display: block;
+  margin-top: 6px;
   font-size: 13px;
+  line-height: 1.45;
+  color: #9a9ab2;
+}
+
+.partners__actions {
+  display: none;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.partners__actions.partners__actions--visible {
+  display: flex;
+}
+
+.partners__more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: #e4e4f0;
+  background-color: rgba(8, 8, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.18s ease;
+}
+
+.partners__more-btn:hover {
+  background-color: rgba(18, 18, 32, 0.95);
+  border-color: rgba(255, 207, 113, 0.45);
+  color: #ffcf71;
+}
+
+.partners__more-btn:active {
+  transform: scale(0.98);
 }
 
 /* -------- CONTACTS SECTION -------- */
@@ -690,7 +907,16 @@ body {
   margin-bottom: 32px;
 }
 
-.contacts__telegram {
+.contacts__social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.contacts__social-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -700,17 +926,17 @@ body {
   background: linear-gradient(135deg, #ffcf71, #ff884b);
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
   color: #0a0a11;
-  margin-bottom: 24px;
+  text-decoration: none;
   transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
 }
 
-.contacts__telegram:hover {
+.contacts__social-btn:hover {
   transform: scale(1.08) translateY(-1px);
   box-shadow: 0 22px 55px rgba(0, 0, 0, 0.65);
   background: linear-gradient(135deg, #ffd98e, #ff975f);
 }
 
-.contacts__telegram-icon {
+.contacts__social-icon {
   width: 32px;
   height: 32px;
 }
@@ -845,6 +1071,7 @@ body {
 }
 
 .order-modal__form {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -873,6 +1100,7 @@ body {
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
+
 .order-modal__input::placeholder {
   color: #6a6a80;
 }
@@ -883,9 +1111,121 @@ body {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.order-modal__input.is-invalid {
+  border-color: rgba(255, 100, 100, 0.6);
+}
+
 .order-modal__input--area {
   resize: vertical;
   min-height: 80px;
+}
+
+.order-modal__select-native {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+}
+
+.order-modal__select-wrap {
+  position: relative;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.order-modal__select-wrap.is-open,
+.order-modal__select-wrap:focus-within {
+  border-color: rgba(255, 207, 113, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.order-modal__select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  color: #ffffff;
+  text-align: left;
+}
+
+.order-modal__select-arrow {
+  flex-shrink: 0;
+  transition: opacity 0.15s ease, transform 0.2s ease;
+}
+
+.order-modal__select-wrap.is-open .order-modal__select-arrow {
+  opacity: 0;
+}
+
+.order-modal__select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #14141f;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.order-modal__select-wrap.is-open .order-modal__select-dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.order-modal__select-option {
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  color: #d0d0dd;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.order-modal__select-option:hover {
+  background: rgba(255, 207, 113, 0.1);
+  color: #ffffff;
+}
+
+.order-modal__select-option.is-selected {
+  color: #ffcf71;
+  background: rgba(255, 207, 113, 0.08);
+}
+
+/* Honeypot Web3Forms: в DOM есть, на экране нет (старый sr-only ломался у checkbox в flex) */
+.order-modal__hp {
+  display: none !important;
+}
+
+.order-modal__status {
+  margin: 0;
+  min-height: 1.25em;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #ffcf71;
+}
+
+.order-modal__status--error {
+  color: #ff8a8a;
 }
 
 .order-modal__submit {
@@ -909,6 +1249,13 @@ body {
   background: linear-gradient(135deg, #ffd98e, #ff975f);
 }
 
+.order-modal__submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 /* -------- RESPONSIVE -------- */
 
 @media (max-width: 1024px) {
@@ -923,12 +1270,14 @@ body {
   }
 
   .hero__title {
-    font-size: clamp(34px, 5.2vw, 52px);
+    font-size: clamp(36px, 5.2vw, 56px);
   }
 
   .hero__subtitle {
     font-size: 15px;
   }
+
+
 
   .projects__grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -937,6 +1286,7 @@ body {
   .project-card--wide {
     grid-column: span 2;
   }
+  
 
   .develop {
     padding: 56px 20px 64px;
@@ -950,9 +1300,12 @@ body {
     padding: 64px 20px 80px;
   }
 
-  .about__inner {
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-    gap: 40px;
+  .partners {
+    padding: 64px 20px 80px;
+  }
+
+  .partners__header {
+    margin-bottom: 40px;
   }
 
   .contacts {
@@ -968,6 +1321,11 @@ body {
 
   .hero__content {
     max-width: 100%;
+    margin-top: 14vh;
+  }
+
+  .hero__logo img {
+    height: 50px;
   }
 
   .hero__label {
@@ -976,13 +1334,13 @@ body {
   }
 
   .hero__title {
-    font-size: clamp(26px, 8vw, 34px);
+    font-size: clamp(34px, 10vw, 46px);
     line-height: 1.1;
   }
 
   .hero__subtitle {
     max-width: 100%;
-    font-size: 14px;
+    font-size: 12px;
     margin-bottom: 20px;
   }
 
@@ -995,7 +1353,7 @@ body {
   .hero__actions {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 20px;
     margin-bottom: 20px;
   }
 
@@ -1010,6 +1368,15 @@ body {
     flex-direction: column;
     gap: 10px;
     font-size: 11px;
+  }
+
+  .hero__meta-item {
+    padding: 8px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .hero__meta-item:last-child {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .hero__bg {
@@ -1041,6 +1408,58 @@ body {
     grid-column: span 2;
   }
 
+  .project-card__inner:hover .project-card__overlay,
+  .project-card__inner:focus-visible .project-card__overlay {
+    opacity: 0;
+    transform: translateY(4%);
+  }
+
+  .project-card__inner:hover .project-card__img,
+  .project-card__inner:focus-visible .project-card__img {
+    transform: scale(1.02);
+    filter: grayscale(10%);
+  }
+
+  .lightbox__dialog {
+    display: flex;
+    flex-direction: column;
+    max-height: 88vh;
+  }
+
+  .lightbox__img {
+    flex: 1 1 auto;
+    min-height: 0;
+    object-fit: contain;
+  }
+
+  .lightbox__caption {
+    display: block;
+    flex-shrink: 0;
+    padding: 16px 12px 20px;
+    background: #0a0a12;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .lightbox__caption-title {
+    display: block;
+    font-family: "Yeseva One", system-ui, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, #ffcf71, #ff884b, #ffd3a5, #ff8c6b);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: heroTitleGradient 8s ease-in-out infinite alternate;
+  }
+
+  .lightbox__caption-meta {
+    display: block;
+    font-size: 12px;
+    color: #9a9ab2;
+  }
+
   .develop {
     padding: 40px 12px 48px;
   }
@@ -1061,13 +1480,20 @@ body {
     margin: 0 auto;
   }
 
-  .about {
-    padding: 40px 12px 56px;
+  .develop-card__trigger .develop-card__overlay {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  .about__inner {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
+  .develop-card__trigger .develop-card__cta {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(255, 207, 113, 0.2);
+    border-color: rgba(255, 207, 113, 0.5);
+  }
+
+  .about {
+    padding: 40px 12px 56px;
   }
 
   .about__title {
@@ -1076,6 +1502,59 @@ body {
 
   .about__text {
     font-size: 14px;
+  }
+
+  .about__list-footnote {
+    font-size: 14px;
+  }
+
+  .about__list-title {
+    font-size: 13px;
+  }
+
+  .partners {
+    padding: 40px 12px 56px;
+  }
+
+  .partners__header {
+    margin-bottom: 32px;
+    text-align: left;
+  }
+
+  .partners__title {
+    font-size: 22px;
+    text-align: left;
+  }
+
+  .partners__subtitle {
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .partners__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  .partner-review {
+    padding: 20px 16px 18px;
+  }
+
+  .partner-review__quote p {
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .partner-review__name {
+    font-size: 14px;
+  }
+
+  .partner-review__role {
+    font-size: 12px;
+  }
+
+  .partner-review--wide {
+    grid-column: auto;
   }
 
   .contacts {
@@ -1089,6 +1568,24 @@ body {
 
   .contacts__phone {
     font-size: 20px;
+  }
+}
+
+@media (max-width: 375px) {
+
+
+  .hero__btn-primary {
+    padding: 12px 18px;
+    font-size: 12px;
+  }
+
+  .hero__btn-secondary {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+
+  .hero__actions {
+    gap: 8px;
   }
 }
 
