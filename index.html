@@ -575,7 +575,28 @@
         </label>
         <label class="order-modal__field">
           <span class="order-modal__label">Телефон</span>
-          <input type="tel" name="phone" class="order-modal__input" required placeholder="+7 (___) ___-__-__">
+          <input type="tel" name="phone" id="order-phone" class="order-modal__input" required placeholder="+7 (___) ___-__-__">
+        </label>
+        <label class="order-modal__field">
+          <span class="order-modal__label">Удобный способ связи</span>
+          <div class="order-modal__select-wrap" id="order-messenger-wrap">
+            <select name="messenger" id="order-messenger-native" class="order-modal__select-native" tabindex="-1" aria-hidden="true">
+              <option value="Звонок" selected>Звонок</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Telegram">Telegram</option>
+            </select>
+            <button type="button" class="order-modal__select-trigger" aria-haspopup="listbox" aria-expanded="false" id="order-messenger-trigger">
+              <span class="order-modal__select-value">Звонок</span>
+              <svg class="order-modal__select-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                <path d="M1 1L5 5L9 1" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <ul class="order-modal__select-dropdown" role="listbox" id="order-messenger-list">
+              <li class="order-modal__select-option is-selected" role="option" data-value="Звонок">Звонок</li>
+              <li class="order-modal__select-option" role="option" data-value="WhatsApp">WhatsApp</li>
+              <li class="order-modal__select-option" role="option" data-value="Telegram">Telegram</li>
+            </ul>
+          </div>
         </label>
         <label class="order-modal__field">
           <span class="order-modal__label">Комментарий</span>
@@ -728,12 +749,101 @@
       const orderStatus = modal.querySelector(".order-modal__status");
       const orderSubmit = orderForm?.querySelector(".order-modal__submit");
 
+      const phoneInput = orderForm?.querySelector("#order-phone");
+
+      // Кастомный select «Удобный способ связи»
+      const selectWrap     = document.getElementById("order-messenger-wrap");
+      const selectTrigger  = document.getElementById("order-messenger-trigger");
+      const selectNative   = document.getElementById("order-messenger-native");
+      const selectValueEl  = selectTrigger?.querySelector(".order-modal__select-value");
+      const selectOptions  = selectWrap?.querySelectorAll(".order-modal__select-option");
+
+      const closeMessengerSelect = () => {
+        selectWrap?.classList.remove("is-open");
+        selectTrigger?.setAttribute("aria-expanded", "false");
+      };
+
+      selectTrigger?.addEventListener("click", () => {
+        const isOpen = selectWrap.classList.toggle("is-open");
+        selectTrigger.setAttribute("aria-expanded", String(isOpen));
+      });
+
+      selectOptions?.forEach((opt) => {
+        opt.addEventListener("click", () => {
+          const val = opt.getAttribute("data-value") || "";
+          if (selectValueEl) selectValueEl.textContent = val;
+          if (selectNative) selectNative.value = val;
+          selectOptions.forEach((o) => o.classList.remove("is-selected"));
+          opt.classList.add("is-selected");
+          closeMessengerSelect();
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        if (selectWrap && !selectWrap.contains(e.target)) closeMessengerSelect();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeMessengerSelect();
+      });
+
+      const formatPhone = (raw) => {
+        const digits = raw.replace(/\D/g, "").replace(/^[78]/, "7");
+        if (!digits) return "";
+        let r = "+7";
+        if (digits.length > 1) r += " (" + digits.slice(1, 4);
+        if (digits.length >= 4) r += ") " + digits.slice(4, 7);
+        if (digits.length >= 7) r += "-" + digits.slice(7, 9);
+        if (digits.length >= 9) r += "-" + digits.slice(9, 11);
+        return r;
+      };
+
+      phoneInput?.addEventListener("input", (e) => {
+        orderStatus?.classList.remove("order-modal__status--error");
+        if (orderStatus) orderStatus.textContent = "";
+        phoneInput.classList.remove("is-invalid");
+
+        const pos = phoneInput.selectionStart;
+        const oldLen = phoneInput.value.length;
+        const formatted = formatPhone(phoneInput.value);
+        phoneInput.value = formatted;
+        const delta = formatted.length - oldLen;
+        const newPos = Math.max(0, pos + delta);
+        phoneInput.setSelectionRange(newPos, newPos);
+      });
+
+      phoneInput?.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && phoneInput.selectionStart === phoneInput.selectionEnd) {
+          const pos = phoneInput.selectionStart;
+          const val = phoneInput.value;
+          const prev = val[pos - 1];
+          if (prev && /\D/.test(prev)) {
+            e.preventDefault();
+            const target = pos - 1;
+            phoneInput.value = val.slice(0, target - 1) + val.slice(pos);
+            const formatted = formatPhone(phoneInput.value);
+            phoneInput.value = formatted;
+            const newPos = Math.max(0, target - 1);
+            phoneInput.setSelectionRange(newPos, newPos);
+          }
+        }
+      });
+
       orderForm?.addEventListener("submit", async (e) => {
         e.preventDefault();
         if (!orderForm || !orderSubmit) return;
 
         orderStatus?.classList.remove("order-modal__status--error");
         if (orderStatus) orderStatus.textContent = "";
+
+        const phoneVal = (phoneInput?.value || "").replace(/\D/g, "").replace(/^7/, "");
+        if (phoneVal.length < 10) {
+          orderStatus?.classList.add("order-modal__status--error");
+          if (orderStatus) orderStatus.textContent = "Укажите корректный номер телефона.";
+          phoneInput?.classList.add("is-invalid");
+          phoneInput?.focus();
+          return;
+        }
 
         const submitLabel = orderSubmit.textContent;
         orderSubmit.disabled = true;
@@ -757,6 +867,7 @@
             success = true;
             if (orderStatus) orderStatus.textContent = "Спасибо! Заявка отправлена, скоро свяжемся.";
             orderForm.reset();
+            phoneInput?.classList.remove("is-invalid");
             sourceInput.value = "";
             setTimeout(() => {
               closeOrder();

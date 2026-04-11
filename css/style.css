@@ -1147,6 +1147,7 @@ body {
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
+
 .order-modal__input::placeholder {
   color: #6a6a80;
 }
@@ -1157,9 +1158,104 @@ body {
   background: rgba(255, 255, 255, 0.08);
 }
 
+.order-modal__input.is-invalid {
+  border-color: rgba(255, 100, 100, 0.6);
+}
+
 .order-modal__input--area {
   resize: vertical;
   min-height: 80px;
+}
+
+.order-modal__select-native {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+}
+
+.order-modal__select-wrap {
+  position: relative;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.order-modal__select-wrap.is-open,
+.order-modal__select-wrap:focus-within {
+  border-color: rgba(255, 207, 113, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.order-modal__select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 15px;
+  color: #ffffff;
+  text-align: left;
+}
+
+.order-modal__select-arrow {
+  flex-shrink: 0;
+  transition: opacity 0.15s ease, transform 0.2s ease;
+}
+
+.order-modal__select-wrap.is-open .order-modal__select-arrow {
+  opacity: 0;
+}
+
+.order-modal__select-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: #14141f;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.order-modal__select-wrap.is-open .order-modal__select-dropdown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.order-modal__select-option {
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  color: #d0d0dd;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.order-modal__select-option:hover {
+  background: rgba(255, 207, 113, 0.1);
+  color: #ffffff;
+}
+
+.order-modal__select-option.is-selected {
+  color: #ffcf71;
+  background: rgba(255, 207, 113, 0.08);
 }
 
 /* Honeypot Web3Forms: в DOM есть, на экране нет (старый sr-only ломался у checkbox в flex) */
